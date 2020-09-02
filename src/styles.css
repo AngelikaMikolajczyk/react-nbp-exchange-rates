@@ -1,0 +1,197 @@
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-size: 20px;
+  line-height: normal;
+  min-height: 100vh;
+  max-width: 100vw;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+* {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  font-family: "Asap Condensed", sans-serif;
+  text-align: center;
+  background-color: inherit;
+}
+
+.containerMenu {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  box-shadow: 4px 4px 12px #cccccc;
+  background-color: #ffffff;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 76vw;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.companyName {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 48px;
+  margin-left: 28px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  font-size: 24px;
+  gap: 10px;
+}
+
+.category {
+  margin: 0 auto;
+}
+
+.containerCurrencies {
+  margin: 140px auto 60px auto;
+  width: 76vw;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 600;
+  padding: 20px 0;
+}
+
+.currenciesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  grid-template-rows: repeat(2, minmax(180px, 1fr));
+  justify-content: stretch;
+  align-content: stretch;
+  gap: 26px;
+  margin: 30px;
+}
+
+.currency {
+  border: 1px solid #cccccc;
+  box-shadow: 4px 4px 12px #cccccc;
+  padding: 12px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.currencyData {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 6px;
+}
+
+.flag {
+  margin-right: 8px;
+}
+
+.currencySymbol {
+  display: flex;
+}
+
+.currencyIn {
+  margin-right: 6px;
+  font-weight: 600;
+}
+
+.currencyOut {
+  margin-left: 6px;
+}
+
+.exchangeRates {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.exchange {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 6px;
+  font-weight: 600;
+}
+
+.gold {
+  margin: 40px auto 60px auto;
+  width: 76vw;
+}
+
+.currentGoldPrice {
+  font-weight: 600;
+  margin-left: 6px;
+  font-size: 28px;
+}
+
+.goldData {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.gold_bar {
+  margin-right: 6px;
+}
+
+.note {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.moreGoldPrices,
+.moreCurrencies {
+  margin-top: 36px;
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.exchangesContainer {
+  margin: 140px auto 60px auto;
+  width: 76vw;
+}
+
+.exchangeTable {
+  margin: 40px auto 0 auto;
+  width: 92%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e6e6e6;
+  padding: 10px;
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
