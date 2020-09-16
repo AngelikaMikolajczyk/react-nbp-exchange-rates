@@ -1,26 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { priceFormatter } from "./priceFormatter";
+
+const ENDPOINT_GOLD = "https://api.nbp.pl/api/cenyzlota/?format=json";
 
 export function Gold() {
   const [goldPrice, setGoldPrice] = React.useState("0");
-  const endpointGold = "https://api.nbp.pl/api/cenyzlota/?format=json";
 
+  // fetching current gold price
   React.useEffect(() => {
     async function fetchGoldPrice() {
-      let response = await fetch(endpointGold);
+      let response = await fetch(ENDPOINT_GOLD);
       let data = await response.json();
       setGoldPrice(data[0].cena);
     }
     fetchGoldPrice();
   }, []);
-
-  // const goldPricePromise = fetch(endpointGold)
-  //   .then((response) => {
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     setGoldPrice(data[0].cena);
-  //   });
 
   return (
     <div className="gold">
@@ -34,7 +29,7 @@ export function Gold() {
           alt=""
         />
         <div className="currentGoldPrice">
-          {goldPrice.toString().replace(".", ",")} PLN
+          {priceFormatter.format(goldPrice)} PLN
         </div>
       </div>
       <div className="note">

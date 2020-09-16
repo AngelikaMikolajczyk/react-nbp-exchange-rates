@@ -5,6 +5,8 @@ import { Gold } from "./Gold";
 import "./styles.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Exchanges } from "./Exchanges";
+import { HistoricalGoldPrices } from "./HistoricalGoldPrices";
+import { ExchangeForCurrency } from "./ExchangeForCurrency";
 
 export default function App() {
   return (
@@ -12,10 +14,15 @@ export default function App() {
       <div className="App">
         <Menu />
         <Switch>
-          <Route path="/rates">
-            <Exchanges></Exchanges>
+          <Route path="/rates/:currency">
+            <ExchangeForCurrency />
           </Route>
-          <Route path="/gold">Ceny złota</Route>
+          <Route path="/rates">
+            <Exchanges />
+          </Route>
+          <Route path="/gold">
+            <HistoricalGoldPrices />
+          </Route>
           <Route path="/">
             <Currencies />
             <Gold />

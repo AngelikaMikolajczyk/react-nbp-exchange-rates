@@ -1,30 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { exchangeFormatter } from "./exchangeFormatter";
+import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
 
 function Currency(props) {
+  // routing mechanism for each currency
+  const history = useHistory();
+
+  function handleOnClick() {
+    history.push(`/rates/${props.in.toLowerCase()}`);
+  }
+
   return (
-    <div className="currency">
-      <div className="currencyData">
-        <img
-          className="flag"
-          src={`/icons/${props.in.toLowerCase()}.svg`}
-          width="24"
-          height="24"
-          alt=""
-        />
-        <div className="currencySymbol">
-          <div className="currencyIn">{props.in}</div>/
-          <div className="currencyOut">{props.out}</div>
-        </div>
-      </div>
+    <div className="currency" onClick={handleOnClick}>
+      <FlagAngCurrenciesPair currencyIn={props.in} currencyOut={props.out} />
       <div className="exchangeRates">
         <div className="exchange purchase">
           <p>Kupno</p>
-          <p>{props.bid}</p>
+          <p>{exchangeFormatter.format(props.bid)}</p>
         </div>
         <div className="exchange sale">
           <p>Sprzedaż</p>
-          <p>{props.ask}</p>
+          <p>{exchangeFormatter.format(props.ask)}</p>
         </div>
       </div>
     </div>
@@ -32,6 +29,9 @@ function Currency(props) {
 }
 
 const CURRENCY_CODES = ["EUR", "USD", "GBP", "CHF", "NOK", "SEK", "AUD", "CAD"];
+
+const ENDPOINT_CURRENCIES =
+  "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
 
 export function Currencies() {
   const [exchangeRates, setExchangeRates] = React.useState({
@@ -45,12 +45,11 @@ export function Currencies() {
     CAD: { bid: 0.0, ask: 0.0 }
   });
 
-  const endpointCurrencies =
-    "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
+  // fetching bid and ask rates for main currencies
 
   React.useEffect(() => {
     async function fetchExchangeRates() {
-      let response = await fetch(endpointCurrencies);
+      let response = await fetch(ENDPOINT_CURRENCIES);
       let data = await response.json();
       let exchangeRatesData = data[0].rates.reduce((acc, currentRate) => {
         if (CURRENCY_CODES.includes(currentRate.code)) {
@@ -73,50 +72,50 @@ export function Currencies() {
         <Currency
           in="EUR"
           out="PLN"
-          bid={exchangeRates.EUR.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.EUR.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.EUR.bid}
+          ask={exchangeRates.EUR.ask}
         />
         <Currency
           in="USD"
           out="PLN"
-          bid={exchangeRates.USD.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.USD.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.USD.bid}
+          ask={exchangeRates.USD.ask}
         />
         <Currency
           in="GBP"
           out="PLN"
-          bid={exchangeRates.GBP.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.GBP.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.GBP.bid}
+          ask={exchangeRates.GBP.ask}
         />
         <Currency
           in="CHF"
           out="PLN"
-          bid={exchangeRates.CHF.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.CHF.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.CHF.bid}
+          ask={exchangeRates.CHF.ask}
         />
         <Currency
           in="NOK"
           out="PLN"
-          bid={exchangeRates.NOK.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.NOK.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.NOK.bid}
+          ask={exchangeRates.NOK.ask}
         />
         <Currency
           in="SEK"
           out="PLN"
-          bid={exchangeRates.SEK.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.SEK.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.SEK.bid}
+          ask={exchangeRates.SEK.ask}
         />
         <Currency
           in="AUD"
           out="PLN"
-          bid={exchangeRates.AUD.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.AUD.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.AUD.bid}
+          ask={exchangeRates.AUD.ask}
         />
         <Currency
           in="CAD"
           out="PLN"
-          bid={exchangeRates.CAD.bid.toFixed(4).replace(".", ",")}
-          ask={exchangeRates.CAD.ask.toFixed(4).replace(".", ",")}
+          bid={exchangeRates.CAD.bid}
+          ask={exchangeRates.CAD.ask}
         />
       </div>
       <div className="moreCurrencies">

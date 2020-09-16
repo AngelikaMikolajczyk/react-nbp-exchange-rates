@@ -1,22 +1,27 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { exchangeFormatter } from "./exchangeFormatter";
+import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
 
 function ExchangeTableRow(props) {
+  const history = useHistory();
+
+  function handleOnClick() {
+    history.push(`/rates/${props.currencyIn.toLowerCase()}`);
+  }
+
   return (
-    <tr>
+    <tr onClick={handleOnClick} className="exchangeTableRow">
       <td>
-        <img
-          className="flag"
-          src={`/icons/${props.currencyIn.toLowerCase()}.svg`}
-          width="24"
-          height="24"
-          alt=""
+        <FlagAngCurrenciesPair
+          currencyIn={props.currencyIn}
+          currencyOut={props.currencyOut}
         />
-        {props.currencyIn}/{props.currencyOut}
       </td>
-      <td>{props.name}</td>
+      <td className="currencyName">{props.name}</td>
       <td className="right">{props.currencyCode}</td>
-      <td className="right">{props.bid}</td>
-      <td className="right">{props.ask}</td>
+      <td className="right">{exchangeFormatter.format(props.bid)}</td>
+      <td className="right">{exchangeFormatter.format(props.ask)}</td>
     </tr>
   );
 }
@@ -36,6 +41,9 @@ const FULL_CURRENCY_CODES = [
   "DKK"
 ];
 
+const ENDPOINT_CURRENCIES =
+  "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
+
 export function Exchanges() {
   const [exchangeRates, setExchangeRates] = React.useState({
     EUR: { bid: 0.0, ask: 0.0, name: "" },
@@ -52,12 +60,10 @@ export function Exchanges() {
     DKK: { bid: 0.0, ask: 0.0, name: "" }
   });
 
-  const endpointCurrencies =
-    "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
-
+  // fetching current bid, ask and mid exchange rates for each currency
   React.useEffect(() => {
     async function fetchExchangeRates() {
-      let response = await fetch(endpointCurrencies);
+      let response = await fetch(ENDPOINT_CURRENCIES);
       let data = await response.json();
       let exchangeRatesData = data[0].rates.reduce((acc, currentRate) => {
         if (FULL_CURRENCY_CODES.includes(currentRate.code)) {
@@ -82,7 +88,7 @@ export function Exchanges() {
           <thead>
             <tr>
               <th>Waluta</th>
-              <th>Nazwa</th>
+              <th className="currencyName">Nazwa</th>
               <th className="right">Kod waluty</th>
               <th className="right">Kupno</th>
               <th className="right">Sprzedaż</th>
@@ -94,96 +100,96 @@ export function Exchanges() {
               currencyOut="PLN"
               name={exchangeRates.EUR.name}
               currencyCode="1 EUR"
-              bid={exchangeRates.EUR.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.EUR.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.EUR.bid}
+              ask={exchangeRates.EUR.ask}
             />
             <ExchangeTableRow
               currencyIn="USD"
               currencyOut="PLN"
               name={exchangeRates.USD.name}
               currencyCode="1 USD"
-              bid={exchangeRates.USD.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.USD.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.USD.bid}
+              ask={exchangeRates.USD.ask}
             />
             <ExchangeTableRow
               currencyIn="GBP"
               currencyOut="PLN"
               name={exchangeRates.GBP.name}
               currencyCode="1 GBP"
-              bid={exchangeRates.GBP.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.GBP.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.GBP.bid}
+              ask={exchangeRates.GBP.ask}
             />
             <ExchangeTableRow
               currencyIn="CHF"
               currencyOut="PLN"
               name={exchangeRates.CHF.name}
               currencyCode="1 CHF"
-              bid={exchangeRates.CHF.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.CHF.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.CHF.bid}
+              ask={exchangeRates.CHF.ask}
             />
             <ExchangeTableRow
               currencyIn="NOK"
               currencyOut="PLN"
               name={exchangeRates.NOK.name}
               currencyCode="1 NOK"
-              bid={exchangeRates.NOK.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.NOK.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.NOK.bid}
+              ask={exchangeRates.NOK.ask}
             />
             <ExchangeTableRow
               currencyIn="SEK"
               currencyOut="PLN"
               name={exchangeRates.SEK.name}
               currencyCode="1 SEK"
-              bid={exchangeRates.SEK.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.SEK.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.SEK.bid}
+              ask={exchangeRates.SEK.ask}
             />
             <ExchangeTableRow
               currencyIn="AUD"
               currencyOut="PLN"
               name={exchangeRates.AUD.name}
               currencyCode="1 AUD"
-              bid={exchangeRates.AUD.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.AUD.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.AUD.bid}
+              ask={exchangeRates.AUD.ask}
             />
             <ExchangeTableRow
               currencyIn="CAD"
               currencyOut="PLN"
               name={exchangeRates.CAD.name}
               currencyCode="1 CAD"
-              bid={exchangeRates.CAD.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.CAD.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.CAD.bid}
+              ask={exchangeRates.CAD.ask}
             />
             <ExchangeTableRow
               currencyIn="JPY"
               currencyOut="PLN"
               name={exchangeRates.JPY.name}
               currencyCode="100 JPY"
-              bid={(exchangeRates.JPY.bid * 100).toFixed(4).replace(".", ",")}
-              ask={exchangeRates.JPY.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.JPY.bid * 100}
+              ask={exchangeRates.JPY.ask * 100}
             />
             <ExchangeTableRow
               currencyIn="CZK"
               currencyOut="PLN"
               name={exchangeRates.CZK.name}
               currencyCode="1 CZK"
-              bid={exchangeRates.CZK.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.CZK.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.CZK.bid}
+              ask={exchangeRates.CZK.ask}
             />
             <ExchangeTableRow
               currencyIn="HUF"
               currencyOut="PLN"
               name={exchangeRates.HUF.name}
               currencyCode="100 HUF"
-              bid={(exchangeRates.HUF.bid * 100).toFixed(4).replace(".", ",")}
-              ask={exchangeRates.HUF.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.HUF.bid * 100}
+              ask={exchangeRates.HUF.ask * 100}
             />
             <ExchangeTableRow
               currencyIn="DKK"
               currencyOut="PLN"
               name={exchangeRates.DKK.name}
               currencyCode="1 DKK"
-              bid={exchangeRates.DKK.bid.toFixed(4).replace(".", ",")}
-              ask={exchangeRates.DKK.ask.toFixed(4).replace(".", ",")}
+              bid={exchangeRates.DKK.bid}
+              ask={exchangeRates.DKK.ask}
             />
           </tbody>
         </table>
