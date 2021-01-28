@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { priceFormatter } from "./priceFormatter";
+import axios from "axios";
 
 const ENDPOINT_GOLD = "https://api.nbp.pl/api/cenyzlota/?format=json";
 
@@ -10,8 +11,8 @@ export function Gold() {
   // fetching current gold price
   React.useEffect(() => {
     async function fetchGoldPrice() {
-      let response = await fetch(ENDPOINT_GOLD);
-      let data = await response.json();
+      let {data} = await axios.get(ENDPOINT_GOLD);
+      
       setGoldPrice(data[0].cena);
     }
     fetchGoldPrice();

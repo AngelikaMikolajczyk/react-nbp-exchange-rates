@@ -11,6 +11,7 @@ import {
 import { format, sub } from "date-fns";
 import { exchangeFormatter } from "./exchangeFormatter";
 import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
+import axios from "axios";
 
 export function ExchangeForCurrency() {
   // current currency choosed by user
@@ -53,15 +54,15 @@ export function ExchangeForCurrency() {
   React.useEffect(() => {
     async function fetchBidAndAskAndMidExchangeForCurrency() {
       // fetching current bid and ask exchange rates for currency
-      let responseBidAndAska = await fetch(
-        endpointBidAndAskExchangeForCurrency
-      );
-      let dataBidAndAsk = await responseBidAndAska.json();
+
+      let {data: dataBidAndAsk} = await axios.get(endpointBidAndAskExchangeForCurrency);
+      
       let currencyBidAndAskExchange = dataBidAndAsk.rates[0];
 
       // fetching mid exchange rates for currency and full name of currency
-      let responseMid = await fetch(endpointMidExchangeForCurrency);
-      let dataMid = await responseMid.json();
+
+      let {data: dataMid} = await axios.get(endpointMidExchangeForCurrency);
+      
       let currencyMidExchange = dataMid.rates[dataMid.rates.length - 1];
       setExchangesForCurrency({
         bid: currencyBidAndAskExchange.bid,
@@ -118,10 +119,10 @@ export function ExchangeForCurrency() {
     });
 
     // fetching mid exchange rates for currency for picked date
-    let responseMidForDate = await fetch(endpointMidExchangeForDate);
 
-    if (responseMidForDate.ok) {
-      let dataMidForDate = await responseMidForDate.json();
+    let {data: dataMidForDate, status} = await axios.get(endpointMidExchangeForDate);
+ 
+    if(status === 200) {
       let midExchangeForDate = dataMidForDate.rates[0];
 
       setMidExchange((prevMidExchange) => {

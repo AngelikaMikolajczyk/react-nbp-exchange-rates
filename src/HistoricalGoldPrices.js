@@ -9,6 +9,7 @@ import {
   Tooltip
 } from "recharts";
 import { priceFormatter } from "./priceFormatter";
+import axios from "axios";
 
 function GoldPricesTableRow(props) {
   return (
@@ -36,8 +37,8 @@ export function HistoricalGoldPrices() {
   // fetching gold prices for last 10 stock quotes
   React.useEffect(() => {
     async function fetchGoldPrices() {
-      let response = await fetch(endpointGoldPrices);
-      let goldPricesData = await response.json();
+      let {data: goldPricesData} = await axios.get(endpointGoldPrices);
+
       setGoldPrices(goldPricesData);
     }
 
@@ -47,8 +48,8 @@ export function HistoricalGoldPrices() {
   // feetching gold frices for last one month
   React.useEffect(() => {
     async function fetchHistoricalGoldPrices() {
-      let response = await fetch(endpointHistoricalGoldPrices);
-      let historicalGoldPricesData = await response.json();
+      let {data: historicalGoldPricesData} = await axios.get(endpointHistoricalGoldPrices);
+      
       setHistoricalGoldPrices(historicalGoldPricesData);
     }
     fetchHistoricalGoldPrices();

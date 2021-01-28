@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { exchangeFormatter } from "./exchangeFormatter";
 import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
+import axios from "axios";
 
 function Currency(props) {
   // routing mechanism for each currency
@@ -49,8 +50,9 @@ export function Currencies() {
 
   React.useEffect(() => {
     async function fetchExchangeRates() {
-      let response = await fetch(ENDPOINT_CURRENCIES);
-      let data = await response.json();
+
+      let {data} = await axios.get(ENDPOINT_CURRENCIES);
+      
       let exchangeRatesData = data[0].rates.reduce((acc, currentRate) => {
         if (CURRENCY_CODES.includes(currentRate.code)) {
           acc[currentRate.code] = {

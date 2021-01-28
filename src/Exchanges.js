@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { exchangeFormatter } from "./exchangeFormatter";
 import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
+import axios from "axios";
 
 function ExchangeTableRow(props) {
   const history = useHistory();
@@ -63,8 +64,8 @@ export function Exchanges() {
   // fetching current bid, ask and mid exchange rates for each currency
   React.useEffect(() => {
     async function fetchExchangeRates() {
-      let response = await fetch(ENDPOINT_CURRENCIES);
-      let data = await response.json();
+      let {data} = await axios.get(ENDPOINT_CURRENCIES);
+      
       let exchangeRatesData = data[0].rates.reduce((acc, currentRate) => {
         if (FULL_CURRENCY_CODES.includes(currentRate.code)) {
           acc[currentRate.code] = {

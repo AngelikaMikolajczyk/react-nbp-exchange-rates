@@ -66,15 +66,15 @@ export function Menu() {
           <Category name="kursy walut" link="/rates" />
           <Category name="ceny złota" link="/gold" />
         </div>
-        <div class="themeSwitchContainer">
-          <label class="themeSwitch" for="checkbox">
+        <div className="themeSwitchContainer">
+          <label className="themeSwitch" htmlFor="checkbox">
             <input
               type="checkbox"
               id="checkbox"
               onChange={onChangeTheme}
               checked={theme === "light"}
             />
-            <div class="slider round"></div>
+            <div className="slider round"></div>
           </label>
         </div>
       </div>
