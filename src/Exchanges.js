@@ -45,21 +45,13 @@ const FULL_CURRENCY_CODES = [
 const ENDPOINT_CURRENCIES =
   "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
 
+let defaultState = FULL_CURRENCY_CODES.reduce((acc, code) => {
+    return {...acc, [code]: { bid: 0.0, ask: 0.0, name: ""}}
+  }, {})
+
 export function Exchanges() {
-  const [exchangeRates, setExchangeRates] = React.useState({
-    EUR: { bid: 0.0, ask: 0.0, name: "" },
-    USD: { bid: 0.0, ask: 0.0, name: "" },
-    GBP: { bid: 0.0, ask: 0.0, name: "" },
-    CHF: { bid: 0.0, ask: 0.0, name: "" },
-    NOK: { bid: 0.0, ask: 0.0, name: "" },
-    SEK: { bid: 0.0, ask: 0.0, name: "" },
-    AUD: { bid: 0.0, ask: 0.0, name: "" },
-    CAD: { bid: 0.0, ask: 0.0, name: "" },
-    JPY: { bid: 0.0, ask: 0.0, name: "" },
-    CZK: { bid: 0.0, ask: 0.0, name: "" },
-    HUF: { bid: 0.0, ask: 0.0, name: "" },
-    DKK: { bid: 0.0, ask: 0.0, name: "" }
-  });
+
+  const [exchangeRates, setExchangeRates] = React.useState(defaultState);
 
   // fetching current bid, ask and mid exchange rates for each currency
   React.useEffect(() => {
