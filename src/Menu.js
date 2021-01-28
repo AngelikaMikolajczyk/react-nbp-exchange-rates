@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Category(props) {
+function Category({link, name}) {
   return (
     <div className="category">
-      <Link to={props.link}>{props.name}</Link>
+      <Link to={link}>{name}</Link>
     </div>
   );
 }

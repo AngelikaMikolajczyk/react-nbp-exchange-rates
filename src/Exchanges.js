@@ -4,25 +4,25 @@ import { exchangeFormatter } from "./exchangeFormatter";
 import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
 import axios from "axios";
 
-function ExchangeTableRow(props) {
+function ExchangeTableRow({currencyIn, currencyOut, name, currencyCode, bid, ask}) {
   const history = useHistory();
 
   function handleOnClick() {
-    history.push(`/rates/${props.currencyIn.toLowerCase()}`);
+    history.push(`/rates/${currencyIn.toLowerCase()}`);
   }
 
   return (
     <tr onClick={handleOnClick} className="exchangeTableRow">
       <td>
         <FlagAngCurrenciesPair
-          currencyIn={props.currencyIn}
-          currencyOut={props.currencyOut}
+          currencyIn={currencyIn}
+          currencyOut={currencyOut}
         />
       </td>
-      <td className="currencyName">{props.name}</td>
-      <td className="right">{props.currencyCode}</td>
-      <td className="right">{exchangeFormatter.format(props.bid)}</td>
-      <td className="right">{exchangeFormatter.format(props.ask)}</td>
+      <td className="currencyName">{name}</td>
+      <td className="right">{currencyCode}</td>
+      <td className="right">{exchangeFormatter.format(bid)}</td>
+      <td className="right">{exchangeFormatter.format(ask)}</td>
     </tr>
   );
 }

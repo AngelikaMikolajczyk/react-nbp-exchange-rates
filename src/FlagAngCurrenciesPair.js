@@ -1,18 +1,18 @@
 import React from "react";
 
-export function FlagAngCurrenciesPair(props) {
+export function FlagAngCurrenciesPair({currencyIn, currencyOut}) {
   return (
     <div className="currencyData">
       <img
         className="flag"
-        src={`/icons/${props.currencyIn.toLowerCase()}.svg`}
+        src={`/icons/${currencyIn.toLowerCase()}.svg`}
         width="24"
         height="24"
         alt=""
       />
       <div className="currencySymbol">
-        <div className="currencyIn">{props.currencyIn.toUpperCase()}</div>/
-        <div className="currencyOut">{props.currencyOut.toUpperCase()}</div>
+        <div className="currencyIn">{currencyIn.toUpperCase()}</div>/
+        <div className="currencyOut">{currencyOut.toUpperCase()}</div>
       </div>
     </div>
   );

@@ -11,11 +11,11 @@ import {
 import { priceFormatter } from "./priceFormatter";
 import axios from "axios";
 
-function GoldPricesTableRow(props) {
+function GoldPricesTableRow({date, price}) {
   return (
     <tr>
-      <td className="center">{props.date}</td>
-      <td className="center">{props.price}</td>
+      <td className="center">{date}</td>
+      <td className="center">{price}</td>
     </tr>
   );
 }

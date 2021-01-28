@@ -119,27 +119,29 @@ export function ExchangeForCurrency() {
     });
 
     // fetching mid exchange rates for currency for picked date
+    try {
+      let {data: dataMidForDate} = await axios.get(endpointMidExchangeForDate);
 
-    let {data: dataMidForDate, status} = await axios.get(endpointMidExchangeForDate);
- 
-    if(status === 200) {
-      let midExchangeForDate = dataMidForDate.rates[0];
+        let midExchangeForDate = dataMidForDate.rates[0];
+  
+        setMidExchange((prevMidExchange) => {
+          return {
+            ...prevMidExchange,
+            mid: midExchangeForDate.mid
+          };
+        });
+     
+      } catch {
+        setMidExchange((prevMidExchange) => {
+          return {
+            ...prevMidExchange,
+            error: "Brak danych"
+          };
+        });
+      }
 
-      setMidExchange((prevMidExchange) => {
-        return {
-          ...prevMidExchange,
-          mid: midExchangeForDate.mid
-        };
-      });
-    } else {
-      setMidExchange((prevMidExchange) => {
-        return {
-          ...prevMidExchange,
-          error: "Brak danych"
-        };
-      });
-    }
   }
+
   return (
     <div className="currencyExchangesContainer">
       <h1>

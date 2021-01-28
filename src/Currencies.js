@@ -4,25 +4,25 @@ import { exchangeFormatter } from "./exchangeFormatter";
 import { FlagAngCurrenciesPair } from "./FlagAngCurrenciesPair";
 import axios from "axios";
 
-function Currency(props) {
+function Currency({ in: inProp, out, bid, ask }) {
   // routing mechanism for each currency
   const history = useHistory();
 
   function handleOnClick() {
-    history.push(`/rates/${props.in.toLowerCase()}`);
+    history.push(`/rates/${inProp.toLowerCase()}`);
   }
 
   return (
     <div className="currency" onClick={handleOnClick}>
-      <FlagAngCurrenciesPair currencyIn={props.in} currencyOut={props.out} />
+      <FlagAngCurrenciesPair currencyIn={inProp} currencyOut={out} />
       <div className="exchangeRates">
         <div className="exchange purchase">
           <p>Kupno</p>
-          <p>{exchangeFormatter.format(props.bid)}</p>
+          <p>{exchangeFormatter.format(bid)}</p>
         </div>
         <div className="exchange sale">
           <p>Sprzedaż</p>
-          <p>{exchangeFormatter.format(props.ask)}</p>
+          <p>{exchangeFormatter.format(ask)}</p>
         </div>
       </div>
     </div>
